@@ -252,19 +252,3 @@ _Multi-day workshop_:
     ``` curl http://localhost:9999/reservations/names -H "Authorization: Bearer _INSERT TOKEN_" ```
 
 
-
-##  10. Optimize for Velocity and Consistency
-- create a parent dependency that in turn defines all the Git Commit ID plugins, the executable jars, etc.
-- package up common resources like `logstash.xml`
-- create a new stereotypical and task-centric Maven `starter` dependency that in turn brings in commonly used dependencies like `org.springframework.cloud`:`spring-cloud-starter-zipkin`, `org.springframework.cloud`:`spring-cloud-starter-eureka`,
-`org.springframework.cloud`:`spring-cloud-starter-config`, `org.springframework.cloud`:`spring-cloud-starter-stream-binder-rabbit`, `org.springframework.boot`:`spring-boot-starter-actuator`, `net.logstash.logback`:`logstash-logback-encoder`:`4.2`,
-- extract all the repeated code into auto-configuration: the `AlwaysSampler` bean, `@EnableDiscoveryClient`, the custom `HealthIndicator`s.
-- **EXTRA CREDIT**: define a Logger that is in turn a proxy that can only be injected using a custom qualifier (`@Logstash`)
-
-## Log Aggregation and Analysis with ELK
-- run `./bin/elk.sh`
-- add `net.logstash.logback`:`logstash-logback-encoder`:`4.2` to the `reservation-service` and `reservation-client`
-- add `logback.xml` to each project's `resources` directory. it should be configured to point to the value of `$DOCKER_HOST` or some DNS entry
-- import `org.slf4j.Logger` and `org.slf4j.LoggerFactory`
-- declare a logger: `Logger LOGGER = LoggerFactory.getLogger( DemoApplication.class);`
-- in the `reservation-service`, use `LogstashMarker`s to emit interesting semantic logs to be collected by the Kibana UI at `http://$DOCKER_HOST:...`
